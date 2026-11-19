@@ -19,7 +19,7 @@ jobs:
           role-to-assume: arn:aws:iam::597302606393:role/oidc-role
           aws-region: us-east-1
           role-session-name: GitHubOIDCTest
-          role-duration-seconds: 300
+          role-duration-seconds: 900
 
       - name: Verify AWS identity
         run: aws sts get-caller-identity
