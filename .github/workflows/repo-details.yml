@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -11,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
       - name: Show repository information
         env:
           REPOSITORY: ${{ github.repository }}
@@ -26,10 +28,10 @@ jobs:
       - name: Authenticate to AWS using OIDC
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::597302606393:role/oidc-test
+          role-to-assume: arn:aws:iam::597302606393:role/oidc
           aws-region: us-east-1
           role-session-name: GitHubOIDCTest
-          role-duration-seconds: 900
+          audience: sts.amazonaws.com
 
       - name: Verify AWS identity
         run: aws sts get-caller-identity
