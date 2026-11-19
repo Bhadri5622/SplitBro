@@ -14,13 +14,12 @@ jobs:
 
     steps:
       - name: Authenticate to AWS using OIDC
-        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::597302606393:role/SplitBro-OIDC-Role
+          role-to-assume: arn:aws:iam::597302606393:role/oidc-role
           aws-region: us-east-1
           role-session-name: GitHubOIDCTest
-          role-duration-seconds: 900
-          allowed-account-ids: "597302606393"
+          role-duration-seconds: 300
 
       - name: Verify AWS identity
         run: aws sts get-caller-identity
