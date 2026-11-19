@@ -1,0 +1,24 @@
+name: Show Repository Details
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  details:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show repository information
+        env:
+          REPOSITORY: ${{ github.repository }}
+          REPOSITORY_ID: ${{ github.repository_id }}
+          OWNER_ID: ${{ github.repository_owner_id }}
+          BRANCH_REF: ${{ github.ref }}
+        run: |
+          echo "Repository: $REPOSITORY"
+          echo "Repository ID: $REPOSITORY_ID"
+          echo "Owner ID: $OWNER_ID"
+          echo "Branch ref: $BRANCH_REF"

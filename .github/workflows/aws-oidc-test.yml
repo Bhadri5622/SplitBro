@@ -1,0 +1,29 @@
+name: AWS OIDC and S3 Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Authenticate to AWS using OIDC
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: arn:aws:iam::597302606393:role/SplitBro-OIDC-Role
+          aws-region: us-east-1
+          role-session-name: GitHubOIDCTest
+          role-duration-seconds: 900
+          allowed-account-ids: "597302606393"
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Verify S3 list access
+        run: aws s3 ls s3://dev-splitbro-app/
