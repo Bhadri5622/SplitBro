@@ -22,3 +22,14 @@ jobs:
           echo "Repository ID: $REPOSITORY_ID"
           echo "Owner ID: $OWNER_ID"
           echo "Branch ref: $BRANCH_REF"
+
+      - name: Authenticate to AWS using OIDC
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::597302606393:role/oidc-test
+          aws-region: us-east-1
+          role-session-name: GitHubOIDCTest
+          role-duration-seconds: 900
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
